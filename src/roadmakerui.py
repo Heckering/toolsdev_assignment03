@@ -144,8 +144,8 @@ class RoadMakerUI(QtWidgets.QDialog):
 
     def create_connections(self):
         """connects our witget signals to slots"""
-        """self.cancel_btn.clicked.connect(self.cancel)
-        self.save_btn.clicked.connect(self.save)
+        self.finish_btn.clicked.connect(self.cancel)
+        """self.save_btn.clicked.connect(self.save)
         self.increment_save_btn.clicked.connect(self.increment_save)"""
 
     def _populate_sceenfile_properties(self):
