@@ -32,9 +32,16 @@ class RoadMakerUtils(object):
         """deltes the item at the curent location
         assigns the preveious loaction to the current location
         deletes the previous location"""
-        previoussegnum = self.segmentnum - 1
-        self.currentxyz = self.previouslocations[previoussegnum]
-        del self.previouslocations[previoussegnum]
+        if self.segmentnum == 1:
+            segment = self.find_segment(0)
+            maya.cmds.delete(segment)
+        if self.segmentnum > 0:
+            segment = self.find_segment(self.segmentnum)
+            maya.cmds.delete(segment)
+            self.segmentnum -= 1
+            self.currentxyz = self.previouslocations[self.segmentnum]
+            del self.previouslocations[self.segmentnum]
+
 
     def up_segment(self):
         """create a road segment rotated 90 degrees and -1 in Z direction
@@ -85,3 +92,4 @@ class RoadMakerUtils(object):
         maya.cmds.polyCube(name = "RoadSegment" + str(segnum))
         segment = self.find_segment(segnum)
         maya.cmds.move(currentxyz[0], currentxyz[1], currentxyz[2], segment)
+        
