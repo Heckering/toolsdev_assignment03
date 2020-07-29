@@ -18,6 +18,7 @@ class RoadMakerUtils(object):
         and resets the previous locations"""
         self.startxyz = coordinates
         self.currentxyz = self.startxyz
+        self.finish_segments()
         self.segmentnum = 0
         self.previouslocations.clear()
 
@@ -41,7 +42,6 @@ class RoadMakerUtils(object):
             self.segmentnum -= 1
             self.currentxyz = self.previouslocations[self.segmentnum]
             del self.previouslocations[self.segmentnum]
-
 
     def up_segment(self):
         """create a road segment rotated 90 degrees and -1 in Z direction
@@ -87,9 +87,19 @@ class RoadMakerUtils(object):
         return maya.cmds.ls('RoadSegment' + str(segmentnum))
 
     def make_segment(self, segmentnum, coordinates):
+        """creates a segmment of road in a default state"""
         currentxyz = coordinates
         segnum = segmentnum
         maya.cmds.polyCube(name = "RoadSegment" + str(segnum))
         segment = self.find_segment(segnum)
         maya.cmds.move(currentxyz[0], currentxyz[1], currentxyz[2], segment)
-        
+
+    def finish_segments(self):
+        """called by the finish button, or the set starting location button
+        sets the names off all segments in the scene to CompletedSegment"""
+        segments = maya.cmds.ls("RoadSegment*")
+        if len(segments) >= 1:
+            while self.segmentnum >= 0:
+                maya.cmds.rename(self.find_segment(self.segmentnum), "CompletedSegment"
+                                 + str(self.segmentnum))
+                self.segmentnum -= 1

@@ -96,6 +96,14 @@ class RoadMakerUI(QtWidgets.QDialog):
         self.left_btn.clicked.connect(self.left_seg)
         self.right_btn.clicked.connect(self.right_seg)
         self.undo_btn.clicked.connect(self.undo_seg)
+        self.set_btn.clicked.connect(self.set_start)
+
+    @QtCore.Slot()
+    def set_start(self):
+        coordinates = [int(self.x_spinbox.text()),
+                       int(self.y_spinbox.text()),
+                       int(self.z_spinbox.text())]
+        self.roadmaker.update_starting_xyz(coordinates)
 
     @QtCore.Slot()
     def up_seg(self):
@@ -120,4 +128,5 @@ class RoadMakerUI(QtWidgets.QDialog):
     @QtCore.Slot()
     def cancel(self):
         """quits the dialog"""
+        self.roadmaker.finish_segments()
         self.close()
