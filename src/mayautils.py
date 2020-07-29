@@ -42,14 +42,9 @@ class RoadMakerUtils(object):
             create road segment rotated 90 degrees at starting location
         call update xyz"""
         if self.currentxyz == self.startxyz:
-            maya.cmds.polyCube(name = "RoadSegment" + str(self.segmentnum))
-            startcube = self.find_cube(self.segmentnum)
-            maya.cmds.move(self.startxyz[0], self.startxyz[1], self.currentxyz[2], 
-                           startcube)
+            self.make_segment(self.segmentnum, self.currentxyz)
         self.update_xyz([self.currentxyz[0], self.currentxyz[1], self.currentxyz[2] - 1])
-        maya.cmds.polyCube(name = "RoadSegment" + str(self.segmentnum))
-        cube = self.find_cube(self.segmentnum)
-        maya.cmds.move(self.currentxyz[0], self.currentxyz[1], self.currentxyz[2], cube)
+        self.make_segment(self.segmentnum, self.currentxyz)
 
     def down_segment(self):
         """create a road segment rotated 90 degrees and +1 in Z direction
@@ -57,14 +52,9 @@ class RoadMakerUtils(object):
             create road segment rotated 90 degrees at starting location
         call update xyz"""
         if self.currentxyz == self.startxyz:
-            maya.cmds.polyCube(name = "RoadSegment" + str(self.segmentnum))
-            startcube = self.find_cube(self.segmentnum)
-            maya.cmds.move(self.startxyz[0], self.startxyz[1], self.currentxyz[2], 
-                           startcube)
+            self.make_segment(self.segmentnum, self.currentxyz)
         self.update_xyz([self.currentxyz[0], self.currentxyz[1], self.currentxyz[2] + 1])
-        maya.cmds.polyCube(name = "RoadSegment" + str(self.segmentnum))
-        cube = self.find_cube(self.segmentnum)
-        maya.cmds.move(self.currentxyz[0], self.currentxyz[1], self.currentxyz[2], cube)
+        self.make_segment(self.segmentnum, self.currentxyz)
     
     def right_segment(self):
         """create a road segment +1 in X direction
@@ -72,14 +62,9 @@ class RoadMakerUtils(object):
             create road segment at starting location
         call update xyz"""
         if self.currentxyz == self.startxyz:
-            maya.cmds.polyCube(name = "RoadSegment" + str(self.segmentnum))
-            startcube = self.find_cube(self.segmentnum)
-            maya.cmds.move(self.startxyz[0], self.startxyz[1], self.currentxyz[2], 
-                           startcube)
+            self.make_segment(self.segmentnum, self.currentxyz)
         self.update_xyz([self.currentxyz[0] + 1, self.currentxyz[1], self.currentxyz[2]])
-        maya.cmds.polyCube(name = "RoadSegment" + str(self.segmentnum))
-        cube = self.find_cube(self.segmentnum)
-        maya.cmds.move(self.currentxyz[0], self.currentxyz[1], self.currentxyz[2], cube)
+        self.make_segment(self.segmentnum, self.currentxyz)
 
     def left_segment(self):
         """create a road segment -1 in X direction
@@ -87,14 +72,16 @@ class RoadMakerUtils(object):
             create road segment at starting location
         call update xyz"""
         if self.currentxyz == self.startxyz:
-            maya.cmds.polyCube(name = "RoadSegment" + str(self.segmentnum))
-            startcube = self.find_cube(self.segmentnum)
-            maya.cmds.move(self.startxyz[0], self.startxyz[1], self.currentxyz[2], 
-                           startcube)
+            self.make_segment(self.segmentnum, self.currentxyz)
         self.update_xyz([self.currentxyz[0] - 1, self.currentxyz[1], self.currentxyz[2]])
-        maya.cmds.polyCube(name = "RoadSegment" + str(self.segmentnum))
-        cube = self.find_cube(self.segmentnum)
-        maya.cmds.move(self.currentxyz[0], self.currentxyz[1], self.currentxyz[2], cube)
+        self.make_segment(self.segmentnum, self.currentxyz)
 
-    def find_cube(self, segmentnum):
+    def find_segment(self, segmentnum):
         return maya.cmds.ls('RoadSegment' + str(segmentnum))
+
+    def make_segment(self, segmentnum, coordinates):
+        currentxyz = coordinates
+        segnum = segmentnum
+        maya.cmds.polyCube(name = "RoadSegment" + str(segnum))
+        segment = self.find_segment(segnum)
+        maya.cmds.move(currentxyz[0], currentxyz[1], currentxyz[2], segment)
