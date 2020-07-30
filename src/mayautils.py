@@ -48,40 +48,48 @@ class RoadMakerUtils(object):
         if currentxyz is equal to starting xyz
             create road segment rotated 90 degrees at starting location
         call update xyz"""
+        newxyz = [self.currentxyz[0], self.currentxyz[1], self.currentxyz[2] - 1]
         if self.currentxyz == self.startxyz:
             self.make_segment(self.segmentnum, self.currentxyz)
-        self.update_xyz([self.currentxyz[0], self.currentxyz[1], self.currentxyz[2] - 1])
-        self.make_segment(self.segmentnum, self.currentxyz)
+        if(newxyz not in self.previouslocations.values()):
+            self.update_xyz(newxyz)
+            self.make_segment(self.segmentnum, self.currentxyz)
 
     def down_segment(self):
         """create a road segment rotated 90 degrees and +1 in Z direction
         if currentxyz is equal to starting xyz
             create road segment rotated 90 degrees at starting location
         call update xyz"""
+        newxyz = [self.currentxyz[0], self.currentxyz[1], self.currentxyz[2] + 1]
         if self.currentxyz == self.startxyz:
             self.make_segment(self.segmentnum, self.currentxyz)
-        self.update_xyz([self.currentxyz[0], self.currentxyz[1], self.currentxyz[2] + 1])
-        self.make_segment(self.segmentnum, self.currentxyz)
+        if(newxyz not in self.previouslocations.values()):
+            self.update_xyz(newxyz)
+            self.make_segment(self.segmentnum, self.currentxyz)
     
     def right_segment(self):
         """create a road segment +1 in X direction
         if currentxyz is equal to starting xyz
             create road segment at starting location
         call update xyz"""
+        newxyz = [self.currentxyz[0] + 1, self.currentxyz[1], self.currentxyz[2]]
         if self.currentxyz == self.startxyz:
             self.make_segment(self.segmentnum, self.currentxyz)
-        self.update_xyz([self.currentxyz[0] + 1, self.currentxyz[1], self.currentxyz[2]])
-        self.make_segment(self.segmentnum, self.currentxyz)
+        if(newxyz not in self.previouslocations.values()):
+            self.update_xyz(newxyz)
+            self.make_segment(self.segmentnum, self.currentxyz)
 
     def left_segment(self):
         """create a road segment -1 in X direction
         if currentxyz is equal to starting xyz
             create road segment at starting location
         call update xyz"""
+        newxyz = [self.currentxyz[0] - 1, self.currentxyz[1], self.currentxyz[2]]
         if self.currentxyz == self.startxyz:
             self.make_segment(self.segmentnum, self.currentxyz)
-        self.update_xyz([self.currentxyz[0] - 1, self.currentxyz[1], self.currentxyz[2]])
-        self.make_segment(self.segmentnum, self.currentxyz)
+        if(newxyz not in self.previouslocations.values()):
+            self.update_xyz(newxyz)
+            self.make_segment(self.segmentnum, self.currentxyz)
 
     def find_segment(self, segmentnum):
         return maya.cmds.ls('RoadSegment' + str(segmentnum))

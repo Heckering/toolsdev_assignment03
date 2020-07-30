@@ -34,11 +34,11 @@ class RoadMakerUI(QtWidgets.QDialog):
         self.title_lbl.setStyleSheet("font: bold 40px")
         # Location Picker
         self.location_lbl = QtWidgets.QLabel("Start at Location:")
-        self.x_location_lbl = QtWidgets.QLabel("X")
+        self.x_location_lbl = QtWidgets.QLabel("X:")
         self.x_spinbox = QtWidgets.QSpinBox()
-        self.y_location_lbl = QtWidgets.QLabel("Y")
+        self.y_location_lbl = QtWidgets.QLabel("Y:")
         self.y_spinbox = QtWidgets.QSpinBox()
-        self.z_location_lbl = QtWidgets.QLabel("Z")
+        self.z_location_lbl = QtWidgets.QLabel("Z:")
         self.z_spinbox = QtWidgets.QSpinBox()
         self.set_btn = QtWidgets.QPushButton("Set Locaton")
         # Spinbox Ranges
@@ -59,12 +59,12 @@ class RoadMakerUI(QtWidgets.QDialog):
         # Start Location Layout
         self.srt_location_layout = QtWidgets.QHBoxLayout()
         self.srt_location_layout.addWidget(self.location_lbl)
-        self.srt_location_layout.addWidget(self.x_spinbox)
         self.srt_location_layout.addWidget(self.x_location_lbl)
-        self.srt_location_layout.addWidget(self.y_spinbox)
+        self.srt_location_layout.addWidget(self.x_spinbox)
         self.srt_location_layout.addWidget(self.y_location_lbl)
-        self.srt_location_layout.addWidget(self.z_spinbox)
+        self.srt_location_layout.addWidget(self.y_spinbox)
         self.srt_location_layout.addWidget(self.z_location_lbl)
+        self.srt_location_layout.addWidget(self.z_spinbox)
         self.srt_location_layout.addWidget(self.set_btn)
         # Direction Layout
         self.direction_layout_upper = QtWidgets.QHBoxLayout()
